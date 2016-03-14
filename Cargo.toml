@@ -1,0 +1,9 @@
+[package]
+name = "pokedex-bot"
+version = "0.1.0"
+authors = ["Bryan 'icesoldier' Mitchell <bryan@icesoldier.me>"]
+
+[dependencies]
+csv = "0.14.3"
+rustc-serialize = "0.3.18"
+irc = "0.10.1"

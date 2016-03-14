@@ -1,0 +1,14 @@
+{
+	"nickname": "[myBot]",
+	"alt_nicks": ["[myBoot]", "[myBooot]"],
+	"username": "pokedex-bot",
+	"realname": "pokedex-bot",
+	"user_info": "I'm a bot! I'll give you information about pokemon.",
+	"owners": [],
+	"server": "irc.example.net",
+	"port": 6667,
+	"channels": ["#test"],
+	"options": {
+		"csv_path": "./pokedex/pokedex/data/csv"
+	}
+}
