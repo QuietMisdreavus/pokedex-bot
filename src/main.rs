@@ -4,8 +4,6 @@ extern crate irc;
 
 use std::path::Path;
 use std::collections::HashMap;
-use std::io;
-use std::io::prelude::*;
 use std::str::FromStr;
 
 use irc::client::prelude::*;
