@@ -98,27 +98,6 @@ fn main() {
             _ => ()
         }
     }
-
-    // println!("Enter a pokemon's name or number to receive its type(s):");
-
-    // let stdin = io::stdin();
-    // for line_result in stdin.lock().lines() {
-    //     if let Ok(line) = line_result {
-    //         if let Ok(id) = i32::from_str(line.trim()) {
-    //             if db.species_names.contains_key(&id) {
-    //                 println!("{}", print_poke(&id, &db));
-    //             } else {
-    //                 println!("Sorry, that's not a pokemon I know of.");
-    //             }
-    //         } else if let Some(id) = name_lookup.get(&line.trim().to_lowercase()) {
-    //             println!("{}", print_poke(id, &db));
-    //         } else {
-    //             println!("Sorry, that's not a pokemon I know of.");
-    //         }
-    //     } else {
-    //         break;
-    //     }
-    // }
 }
 
 fn get_id(search: &str, db: &Env) -> Option<i32> {
