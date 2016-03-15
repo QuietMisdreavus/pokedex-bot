@@ -76,8 +76,12 @@ fn main() {
         name_lookup: name_lookup
     };
 
+    println!("Connecting...");
+
     let srv = IrcServer::from_config(irc_config).unwrap();
     srv.identify().unwrap();
+
+    println!("Ready!");
 
     for message in srv.iter() {
         let message = message.unwrap();
