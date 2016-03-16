@@ -86,11 +86,13 @@ fn main() {
     for message in srv.iter() {
         let message = message.unwrap();
         match message.command {
-            Command::PRIVMSG(ref target, ref msg) => if msg.len() > 4 {
+            Command::PRIVMSG(ref target, ref msg) => if msg.len() >= 4 {
                 let (cmd, body) = msg.split_at(4);
                 if cmd == "!dex" {
-                    println!("{}: {}", target, msg);
-                    if let Some(id) = get_id(body.trim(), &db) {
+                    println!("{}: {:?}: {}", target, message.source_nickname(), msg);
+                    if body.trim().len() == 0 {
+                        println!("----Empty command!");
+                    } else if let Some(id) = get_id(body.trim(), &db) {
                         srv.send_privmsg(target, &print_poke(&id, &db)).unwrap();
                     } else {
                         srv.send_privmsg(target, "Sorry, that's not a pokemon I know of.").unwrap();
