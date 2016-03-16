@@ -83,6 +83,7 @@ fn main() {
 
     println!("Ready!");
 
+    // map: nick -> last id searched
     let mut last_search = HashMap::new();
 
     for message in srv.iter() {
@@ -94,13 +95,16 @@ fn main() {
                     if cmd == "!dex" {
                         println!("{}: {}: {}", target, nick, msg);
                         if body.trim().len() == 0 {
+                            // "!dex": show user's last search if available
                             if let Some(id) = last_search.get(nick) {
                                 srv.send_privmsg(target, &print_poke(id, &db)).unwrap();
                             }
                         } else if let Some(id) = get_id(body.trim(), &db) {
+                            // "!dex (name|number)": pokemon search
                             srv.send_privmsg(target, &print_poke(&id, &db)).unwrap();
                             last_search.insert(nick.to_owned(), id);
                         } else {
+                            // "!dex (unknown)"
                             srv.send_privmsg(target, "Sorry, that's not a pokemon I know of.").unwrap();
                         }
                     }
