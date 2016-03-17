@@ -6,7 +6,6 @@ mod env;
 
 use std::path::Path;
 use std::collections::HashMap;
-use std::str::FromStr;
 use env::Env;
 
 use irc::client::prelude::*;
@@ -41,7 +40,7 @@ fn main() {
                             if let Some(id) = last_search.get(nick) {
                                 srv.send_privmsg(target, &db.print_poke(id)).unwrap();
                             }
-                        } else if let Some(id) = get_id(body.trim(), &db) {
+                        } else if let Some(id) = db.get_id(body.trim()) {
                             // "!dex (name|number)": pokemon search
                             srv.send_privmsg(target, &db.print_poke(&id)).unwrap();
                             last_search.insert(nick.to_owned(), id);
@@ -62,19 +61,5 @@ fn main() {
             },
             _ => ()
         }
-    }
-}
-
-fn get_id(search: &str, db: &Env) -> Option<i32> {
-    if let Ok(id) = i32::from_str(search) {
-        if db.species_names.contains_key(&id) {
-            Some(id)
-        } else {
-            None
-        }
-    } else if let Some(id) = db.name_lookup.get(&search.to_lowercase()) {
-        Some(id.clone())
-    } else {
-        None
     }
 }

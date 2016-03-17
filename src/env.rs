@@ -1,5 +1,6 @@
 use std::path::Path;
 use std::collections::HashMap;
+use std::str::FromStr;
 use csv;
 
 pub struct Env {
@@ -72,6 +73,20 @@ impl Env {
         };
 
         format!("#{} {}, The {} Pokemon, {} type", id, s_name.0, s_name.1, t_name)
+    }
+
+    pub fn get_id(&self, search: &str) -> Option<i32> {
+        if let Ok(id) = i32::from_str(search) {
+            if self.species_names.contains_key(&id) {
+                Some(id)
+            } else {
+                None
+            }
+        } else if let Some(id) = self.name_lookup.get(&search.to_lowercase()) {
+            Some(id.clone())
+        } else {
+            None
+        }
     }
 }
 
