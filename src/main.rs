@@ -3,10 +3,12 @@ extern crate rustc_serialize;
 extern crate irc;
 
 mod env;
+mod misc;
 
 use std::path::Path;
 use std::collections::HashMap;
 use env::Env;
+use misc::starts_with;
 
 use irc::client::prelude::*;
 
@@ -31,9 +33,9 @@ fn main() {
         let message = message.unwrap();
         match message.command {
             Command::PRIVMSG(ref target, ref msg) => if msg.len() >= 4 {
-                if let Some(nick) = message.source_nickname() {
-                    let (cmd, body) = msg.split_at(4);
-                    if cmd == "!dex" {
+                if starts_with(msg.trim(), "!dex") {
+                    if let Some(nick) = message.source_nickname() {
+                        let body = &msg[4..];
                         println!("{}: {}: {}", target, nick, msg);
                         if body.trim().len() == 0 {
                             // "!dex": show user's last search if available
@@ -49,6 +51,8 @@ fn main() {
                             srv.send_privmsg(target, "Sorry, that's not a pokemon I know of.").unwrap();
                         }
                     }
+                } else if msg.trim() == "!help" {
+                    srv.send_privmsg(target, "Type \"!dex name\" to search for information about a Pokemon.").unwrap();
                 }
             },
             Command::NICK(ref new_nick) => {
