@@ -51,7 +51,12 @@ fn main() {
                                 } else {
                                     // "!dex (unknown)"
                                     srv.send_privmsg(target, "Sorry, that's not a pokemon I know of.").unwrap();
+                                },
+                            botcmd::Command::Help(helptext) => {
+                                for txt in &botcmd::print_help(helptext.trim()) {
+                                    srv.send_privmsg(target, txt).unwrap();
                                 }
+                            }
                         }
                     }
                 } else if msg.trim() == "!help" {
