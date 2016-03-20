@@ -4,11 +4,12 @@ extern crate irc;
 
 mod env;
 mod misc;
+mod command;
 
 use std::path::Path;
 use std::collections::HashMap;
 use env::Env;
-use misc::starts_with;
+use command as botcmd;
 
 use irc::client::prelude::*;
 
@@ -33,22 +34,24 @@ fn main() {
         let message = message.unwrap();
         match message.command {
             Command::PRIVMSG(ref target, ref msg) => if msg.len() >= 4 {
-                if starts_with(msg.trim(), "!dex") {
+                if misc::starts_with(msg.trim(), "!dex") {
                     if let Some(nick) = message.source_nickname() {
                         let body = &msg[4..];
                         println!("{}: {}: {}", target, nick, msg);
-                        if body.trim().len() == 0 {
-                            // "!dex": show user's last search if available
-                            if let Some(id) = last_search.get(nick) {
-                                srv.send_privmsg(target, &db.print_poke(id)).unwrap();
-                            }
-                        } else if let Some(id) = db.get_id(body.trim()) {
-                            // "!dex (name|number)": pokemon search
-                            srv.send_privmsg(target, &db.print_poke(&id)).unwrap();
-                            last_search.insert(nick.to_owned(), id);
-                        } else {
-                            // "!dex (unknown)"
-                            srv.send_privmsg(target, "Sorry, that's not a pokemon I know of.").unwrap();
+                        match botcmd::Command::from_str(body.trim()) {
+                            botcmd::Command::Pokemon(name) => if name.trim().len() == 0 {
+                                    // "!dex": show user's last search if available
+                                    if let Some(id) = last_search.get(nick) {
+                                        srv.send_privmsg(target, &db.print_poke(id)).unwrap();
+                                    }
+                                } else if let Some(id) = db.get_id(name.trim()) {
+                                    // "!dex (name|number)": pokemon search
+                                    srv.send_privmsg(target, &db.print_poke(&id)).unwrap();
+                                    last_search.insert(nick.to_owned(), id);
+                                } else {
+                                    // "!dex (unknown)"
+                                    srv.send_privmsg(target, "Sorry, that's not a pokemon I know of.").unwrap();
+                                }
                         }
                     }
                 } else if msg.trim() == "!help" {
