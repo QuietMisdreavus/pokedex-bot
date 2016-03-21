@@ -60,7 +60,7 @@ fn main() {
                         }
                     }
                 } else if msg.trim() == "!help" {
-                    srv.send_privmsg(target, "Type \"!dex name\" to search for information about a Pokemon.").unwrap();
+                    srv.send_privmsg(target, "Type \"!dex name\" to search for information about a Pokemon, or \"!dex help\" for more commands.").unwrap();
                 }
             },
             Command::NICK(ref new_nick) => {

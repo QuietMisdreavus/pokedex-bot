@@ -26,8 +26,9 @@ impl<'a> Command<'a> {
 
 pub fn print_help(helptext: &str) -> Vec<&'static str> {
     if helptext == "pokemon" || helptext == "p" {
-        vec!["Type \"!dex name\" or \"!dex number\" to search by name or National Dex number.",
-            "The command \"!dex pokemon name\" or \"!dex p name\" may also be used.",
+        vec!["\"!dex pokemon name\": Search basic information about a Pokemon.",
+            "The short form \"!dex p name\" may be used, or even omitted altogether, as in \"!dex name\".",
+            "Searches may be by a Pokemon's name, e.g. \"!dex p drifloon\", or by National Dex number, e.g. \"!dex p 425\".",
             "Typing a search with no search text (i.e. \"!dex\" by itself) will recall your last search."]
     } else {
         vec!["Available commands: p[okemon], h[elp]",
