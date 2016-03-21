@@ -43,6 +43,8 @@ fn main() {
                                     // "!dex": show user's last search if available
                                     if let Some(id) = last_search.get(nick) {
                                         srv.send_privmsg(target, &db.print_poke(id)).unwrap();
+                                    } else {
+                                        srv.send_privmsg(target, &format!("Sorry, {}, I don't have a search on file for you.", nick)).unwrap();
                                     }
                                 } else if let Some(id) = db.get_id(name.trim()) {
                                     // "!dex (name|number)": pokemon search
