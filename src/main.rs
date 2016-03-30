@@ -95,6 +95,9 @@ fn main() {
                     }
                 }
             },
+            Command::JOIN(channel, _, _) => {
+                println!("Joined to {}.", channel);
+            },
             _ => ()
         }
     }
