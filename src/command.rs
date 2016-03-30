@@ -17,6 +17,7 @@
 pub enum Command<'a> {
     Pokemon(&'a str),
     Help(&'a str),
+    Random,
 }
 
 impl<'a> Command<'a> {
@@ -31,6 +32,8 @@ impl<'a> Command<'a> {
                 Command::Help(&cmd[4..])
             } else if word == "h" {
                 Command::Help(&cmd[1..])
+            } else if word == "random" {
+                Command::Random
             } else {
                 Command::Pokemon(cmd)
             }
@@ -46,8 +49,10 @@ pub fn print_help(helptext: &str) -> Vec<&'static str> {
             "The short form \"!dex p name\" may be used, or even omitted altogether, as in \"!dex name\".",
             "Searches may be by a Pokemon's name, e.g. \"!dex p drifloon\", or by National Dex number, e.g. \"!dex p 425\".",
             "Typing a search with no search text (i.e. \"!dex\" by itself) will recall your last search."]
+    } else if helptext == "random" {
+        vec!["\"!dex random\": Selects a random pokemon, then displays its information as if it had been searched for by \"!dex pokemon\"."]
     } else {
-        vec!["Available commands: p[okemon], h[elp]",
+        vec!["Available commands: p[okemon], h[elp], random",
             "See help specific to a command by typing \"!dex help command\"."]
     }
 }

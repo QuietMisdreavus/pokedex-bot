@@ -17,6 +17,7 @@
 extern crate csv;
 extern crate rustc_serialize;
 extern crate irc;
+extern crate rand;
 
 mod env;
 mod misc;
@@ -42,6 +43,8 @@ fn main() {
     srv.identify().unwrap();
 
     println!("Ready!");
+
+    let mut rng = rand::thread_rng();
 
     // map: nick -> last id searched
     let mut last_search = HashMap::new();
@@ -70,11 +73,14 @@ fn main() {
                                     // "!dex (unknown)"
                                     srv.send_privmsg(target, "Sorry, that's not a pokemon I know of.").unwrap();
                                 },
-                            botcmd::Command::Help(helptext) => {
-                                for txt in &botcmd::print_help(helptext.trim()) {
+                            botcmd::Command::Help(helptext) => for txt in &botcmd::print_help(helptext.trim()) {
                                     srv.send_privmsg(target, txt).unwrap();
+                                },
+                            botcmd::Command::Random => {
+                                    let id = rand::sample(&mut rng, db.species_names.keys(), 1).pop().unwrap().clone();
+                                    srv.send_privmsg(target, &db.print_poke(&id)).unwrap();
+                                    last_search.insert(nick.to_owned(), id);
                                 }
-                            }
                         }
                     }
                 } else if msg.trim() == "!help" {
