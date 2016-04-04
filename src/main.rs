@@ -55,8 +55,15 @@ fn main() {
             Command::PRIVMSG(ref target, ref msg) => if msg.len() >= 4 {
                 if misc::starts_with(msg.trim(), "!dex") {
                     if let Some(nick) = message.source_nickname() {
+                        let target = if target == srv.config().nickname() {
+                            nick
+                        } else {
+                            target.as_str()
+                        };
+
                         let body = &msg[4..];
                         println!("{}: {}: {}", target, nick, msg);
+
                         match botcmd::Command::from_str(body.trim()) {
                             botcmd::Command::Pokemon(name) => if name.trim().len() == 0 {
                                     // "!dex": show user's last search if available
