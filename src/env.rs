@@ -18,6 +18,7 @@ use std::path::Path;
 use std::collections::HashMap;
 use std::str::FromStr;
 use csv;
+use rand;
 
 pub struct Env {
     type_map: HashMap<i32, (Option<i32>, Option<i32>)>,
@@ -103,6 +104,11 @@ impl Env {
         } else {
             None
         }
+    }
+
+    pub fn get_random_id<'a>(&'a self) -> &'a i32 {
+        let mut rng = rand::thread_rng();
+        rand::sample(&mut rng, self.species_names.keys(), 1).pop().unwrap()
     }
 }
 

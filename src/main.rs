@@ -44,8 +44,6 @@ fn main() {
 
     println!("Ready!");
 
-    let mut rng = rand::thread_rng();
-
     // map: nick -> last id searched
     let mut last_search = HashMap::new();
 
@@ -84,9 +82,9 @@ fn main() {
                                     srv.send_privmsg(target, txt).unwrap();
                                 },
                             botcmd::Command::Random => {
-                                    let id = rand::sample(&mut rng, db.species_names.keys(), 1).pop().unwrap().clone();
-                                    srv.send_privmsg(target, &db.print_poke(&id)).unwrap();
-                                    last_search.insert(nick.to_owned(), id);
+                                    let id = db.get_random_id();
+                                    srv.send_privmsg(target, &db.print_poke(id)).unwrap();
+                                    last_search.insert(nick.to_owned(), id.clone());
                                 }
                         }
                     }
