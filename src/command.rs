@@ -21,7 +21,7 @@ pub enum Command<'a> {
 }
 
 impl<'a> Command<'a> {
-    pub fn from_str(cmd: &'a str) -> Command {
+    pub fn from_msg(cmd: &'a str) -> Command {
         let mut iter = cmd.split_whitespace();
         if let Some(word) = iter.next() {
             if word == "pokemon" {

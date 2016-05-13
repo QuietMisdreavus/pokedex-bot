@@ -35,7 +35,7 @@ fn main() {
     let csv_path = irc_config.get_option("csv_path").to_owned();
     let base_dir = Path::new(&csv_path);
 
-    let db = Env::from_csv_path(&base_dir);
+    let db = Env::from_csv_path(base_dir);
 
     println!("Connecting...");
 
@@ -62,8 +62,8 @@ fn main() {
                         let body = &msg[4..];
                         println!("{}: {}: {}", target, nick, msg);
 
-                        match botcmd::Command::from_str(body.trim()) {
-                            botcmd::Command::Pokemon(name) => if name.trim().len() == 0 {
+                        match botcmd::Command::from_msg(body.trim()) {
+                            botcmd::Command::Pokemon(name) => if name.trim().is_empty() {
                                     // "!dex": show user's last search if available
                                     if let Some(id) = last_search.get(nick) {
                                         srv.send_privmsg(target, &db.print_poke(id)).unwrap();
@@ -84,7 +84,7 @@ fn main() {
                             botcmd::Command::Random => {
                                     let id = db.get_random_id();
                                     srv.send_privmsg(target, &db.print_poke(id)).unwrap();
-                                    last_search.insert(nick.to_owned(), id.clone());
+                                    last_search.insert(nick.to_owned(), *id);
                                 }
                         }
                     }

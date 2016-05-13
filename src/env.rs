@@ -100,13 +100,13 @@ impl Env {
                 None
             }
         } else if let Some(id) = self.name_lookup.get(&search.to_lowercase()) {
-            Some(id.clone())
+            Some(*id)
         } else {
             None
         }
     }
 
-    pub fn get_random_id<'a>(&'a self) -> &'a i32 {
+    pub fn get_random_id(& self) -> & i32 {
         let mut rng = rand::thread_rng();
         rand::sample(&mut rng, self.species_names.keys(), 1).pop().unwrap()
     }
