@@ -100,8 +100,12 @@ fn main() {
                     }
                 }
             },
-            Command::JOIN(channel, _, _) => {
-                println!("Joined to {}.", channel);
+            Command::JOIN(ref channel, _, _) => {
+                if let Some(prefix) = message.prefix {
+                    if misc::starts_with(&prefix, srv.config().nickname()) {
+                        println!("Joined to {}.", channel);
+                    }
+                }
             },
             _ => ()
         }
