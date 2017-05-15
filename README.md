@@ -11,7 +11,7 @@ required to set up should be as follows:
 [pokedex]: https://github.com/veekun/pokedex
 
 ```sh
-git clone --recursive https://github.com/icesoldier/pokedex-bot.git
+git clone --recursive https://github.com/QuietMisdreavus/pokedex-bot.git
 cd pokedex-bot
 cp config.example.json config.json
 $VISUAL config.json # set up handle/server/channel/etc
@@ -23,8 +23,8 @@ classification, and type(s). I hope to add more features in the near future. The
 involves issuing a search with `!dex [name]` or `!dex [number]`. Some example output follows:
 
 ```
-<icesoldier> !dex arceus
+<misdreavus> !dex arceus
 <[myBot]> #493 Arceus, The Alpha Pokemon, Normal type
-<icesoldier> !dex 123
+<misdreavus> !dex 123
 <[myBot]> #123 Scyther, The Mantis Pokemon, Bug/Flying type
 ```
