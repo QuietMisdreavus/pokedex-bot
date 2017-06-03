@@ -1,5 +1,5 @@
 // pokedex-bot - an irc bot that relays information about pokemon
-// Copyright (C) 2016 Bryan Mitchell (icesoldier)
+// Copyright (C) 2016 QuietMisdreavus
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

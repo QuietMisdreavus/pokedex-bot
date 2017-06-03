@@ -1,7 +1,7 @@
 [package]
 name = "pokedex-bot"
 version = "0.1.0"
-authors = ["Bryan 'icesoldier' Mitchell <bryan@icesoldier.me>"]
+authors = ["QuietMisdreavus <grey@quietmisdreavus.net>"]
 
 [dependencies]
 csv = "0.14.3"
